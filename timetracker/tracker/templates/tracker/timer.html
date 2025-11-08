@@ -6,7 +6,7 @@
 <body>
   <h1>Time Tracker</h1>
   {% if active %}
-    <p>Timer started at: {{ active.start_time }}</p>
+    <p>Timer started at: <span class="datetime" data-utc="{{ active.start_time|date:'c' }}"></span></p>
     <form action="{% url 'toggle_timer' %}" method="post">
       {% csrf_token %}
       <button type="submit">Stop</button>
@@ -18,5 +18,15 @@
     </form>
   {% endif %}
   <p><a href="{% url 'history_view' %}">View History</a></p>
+
+  <script>
+    document.querySelectorAll('.datetime').forEach(el => {
+        const utc = el.dataset.utc;
+        if (utc) {
+        const localTime = new Date(utc);
+        el.textContent = localTime.toLocaleString(); // automatically shows in local timezone
+        }
+    });
+  </script>
 </body>
 </html>

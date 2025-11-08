@@ -13,8 +13,8 @@
     </tr>
     {% for e in entries %}
     <tr>
-      <td>{{ e.start_time }}</td>
-      <td>{{ e.end_time|default:"Active" }}</td>
+      <td><span class="datetime" data-utc="{{ e.start_time|date:'c' }}"></span></td>
+      <td><span class="datetime" data-utc="{{ e.end_time|date:'c'|default:"Active" }}"></span></td>
       <td>{{ e.duration }}</td>
     </tr>
     {% empty %}
@@ -22,5 +22,16 @@
     {% endfor %}
   </table>
   <p><a href="{% url 'timer_view' %}">Back to Timer</a></p>
+
+  <script>
+    document.querySelectorAll('.datetime').forEach(el => {
+        const utc = el.dataset.utc;
+        if (utc) {
+        const localTime = new Date(utc);
+        el.textContent = localTime.toLocaleString(); // automatically shows in local timezone
+        }
+    });
+  </script>
+
 </body>
 </html>
