@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Time Tracker</title>
+</head>
+<body>
+  <h1>Time Tracker</h1>
+  {% if active %}
+    <p>Timer started at: {{ active.start_time }}</p>
+    <form action="{% url 'toggle_timer' %}" method="post">
+      {% csrf_token %}
+      <button type="submit">Stop</button>
+    </form>
+  {% else %}
+    <form action="{% url 'toggle_timer' %}" method="post">
+      {% csrf_token %}
+      <button type="submit">Start</button>
+    </form>
+  {% endif %}
+  <p><a href="{% url 'history_view' %}">View History</a></p>
+</body>
+</html>

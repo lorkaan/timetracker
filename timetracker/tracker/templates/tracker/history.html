@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Time History</title>
+</head>
+<body>
+  <h1>Tracked Sessions</h1>
+  <table border="1">
+    <tr>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Duration</th>
+    </tr>
+    {% for e in entries %}
+    <tr>
+      <td>{{ e.start_time }}</td>
+      <td>{{ e.end_time|default:"Active" }}</td>
+      <td>{{ e.duration }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No time tracked yet.</td></tr>
+    {% endfor %}
+  </table>
+  <p><a href="{% url 'timer_view' %}">Back to Timer</a></p>
+</body>
+</html>
